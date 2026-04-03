@@ -1,0 +1,6 @@
+node_modules/
+.DS_Store
+dist/
+_backup_final/
+recreate_history*.ps1
+package-lock.json

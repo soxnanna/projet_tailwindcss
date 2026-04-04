@@ -1,0 +1,5 @@
+node_modules/
+dist/
+*.ps1
+_backup_final/
+_temp_src/

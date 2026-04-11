@@ -3,61 +3,157 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Anna Keita | Portfolio</title>
+    <title>Anna Keita | Portfolio Dynamique</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .view-transition { transition: opacity 0.3s ease-in-out; }
+        .animate-fade-in {
+            animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
 </head>
-<body class="bg-slate-50 text-slate-900 flex flex-col min-h-screen">
-    <nav class="fixed top-0 w-full z-50 bg-white border-b border-slate-100">
+<body class="bg-slate-50 text-slate-900 antialiased selection:bg-indigo-100 flex flex-col min-h-screen">
+    <nav class="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-xl border-b border-slate-100">
         <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-            <span class="text-2xl font-black text-indigo-600 cursor-pointer" onclick="navigate('home')">AK.</span>
-            <div class="hidden md:flex space-x-10 text-xs font-bold uppercase text-slate-500">
-                <a href="javascript:void(0)" onclick="navigate('home')">Accueil</a>
-                <a href="javascript:void(0)" onclick="navigate('projects')">Projets</a>
+            <span class="text-2xl font-black tracking-tighter text-indigo-600 cursor-pointer" onclick="navigate('home')">AK.</span>
+            <div class="hidden md:flex space-x-10 text-xs font-bold uppercase tracking-widest text-slate-500">
+                <a href="javascript:void(0)" onclick="navigate('home')" class="hover:text-indigo-600 transition">À Propos</a>
+                <a href="javascript:void(0)" onclick="navigate('projects')" class="hover:text-indigo-600 transition">Projets</a>
+                <a href="mailto:soxnanna@gmail.com" class="hover:text-indigo-600 transition text-indigo-600 font-black">Contact</a>
             </div>
         </div>
     </nav>
-    <main id="app" class="flex-grow pt-20">
-        <!-- SPA Container -->
+
+    <main id="app" class="flex-grow pt-20 view-transition opacity-100">
+        <!-- Contenu dynamique injecté ici -->
     </main>
+
     <footer class="py-20 border-t border-slate-100 bg-white text-center">
-        <p class="text-[10px] font-black tracking-[0.3em] text-slate-300 uppercase">&copy; 2026 Anna Keita</p>
+        <p class="text-[10px] font-black tracking-[0.3em] text-slate-300 uppercase">&copy; 2026 Anna Keita / Pure JavaScript & Tailwind</p>
     </footer>
+
     <script>
         const projects = [
-            { id: 'lamp-fall', title: 'Encyclopédie Lamp Fall', category: 'Web', shortDesc: 'Archive spirituelle.', fullDesc: 'Une plateforme de recherche complète.' },
-            { id: 'l-absolu', title: 'L\'Absolu Portfolio', category: 'Design', shortDesc: 'Design premium.', fullDesc: 'Un portfolio avec glassmorphism.' },
-            { id: 'dieye-apple', title: 'Dieye Apple Branding', category: 'Branding', shortDesc: 'Identité visuelle.', fullDesc: 'Branding pour boutique mobile.' }
+            {
+                id: 'lamp-fall',
+                title: 'Encyclopédie Lamp Fall',
+                category: 'Architecture de Données',
+                shortDesc: 'Archive spirituelle bilingue avec recherche temps réel.',
+                fullDesc: 'Une plateforme robuste regroupant plus de 155 citations de Mame Cheikh Ibrahima Fall. Ce projet met en avant une gestion complexe de données multilingues et une interface épurée.',
+                tech: ['Tailwind CSS 4.0', 'Vanilla JS', 'JSON Rendering'],
+                color: 'indigo',
+                image: 'https://images.unsplash.com/photo-1544027993-37dbfe43562a?q=80&w=800'
+            },
+            {
+                id: 'l-absolu',
+                title: 'L\'Absolu Portfolio',
+                category: 'Design Premium',
+                shortDesc: 'Portfolio immersif en mode sombre avec effets de verre.',
+                fullDesc: 'Une expérience visuelle haut de gamme utilisant le glassmorphism (effets de verre). Ce projet démontre ma maîtrise des interactions complexes en pur CSS et JavaScript.',
+                tech: ['Glassmorphism', 'Vanilla Animations', 'UI/UX'],
+                color: 'slate',
+                image: 'https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=800'
+            },
+            {
+                id: 'dieye-apple',
+                title: 'Dieye Apple Branding',
+                category: 'Branding & UI',
+                shortDesc: 'Identité visuelle et supports pour boutique de luxe.',
+                fullDesc: 'Création d\'un univers graphique complet pour une boutique d\'accessoires mobiles. Ce projet inclut la conception de prototypes et de supports promotionnels.',
+                tech: ['Branding', 'Layout Design', 'Prototyping'],
+                color: 'indigo',
+                image: 'https://images.unsplash.com/photo-1512486130939-2c4f79935e4f?q=80&w=800'
+            }
         ];
 
         function navigate(view, id = null) {
-            if (view === 'home') renderHome();
-            else if (view === 'projects') renderProjectList();
-            else if (view === 'detail') renderProjectDetail(id);
+            const app = document.getElementById('app');
+            app.style.opacity = '0';
+            
+            setTimeout(() => {
+                window.scrollTo(0, 0);
+                if (view === 'home') renderHome();
+                else if (view === 'projects') renderProjectList();
+                else if (view === 'detail') renderProjectDetail(id);
+                app.style.opacity = '1';
+            }, 300);
         }
 
         function renderHome() {
-            document.getElementById('app').innerHTML = `
-                <section class="min-h-[80vh] flex items-center justify-center text-center px-6">
-                    <div>
-                        <h1 class="text-7xl font-black mb-8">Anna Keita.</h1>
-                        <p class="text-xl text-slate-400 mb-10">Développeuse Web & Designer.</p>
-                        <button onclick="navigate('projects')" class="px-8 py-4 bg-indigo-600 text-white font-bold rounded-full">Mes Projets</button>
+            const app = document.getElementById('app');
+            app.innerHTML = `
+                <section class="min-h-[85vh] flex items-center justify-center bg-white px-6">
+                    <div class="max-w-4xl text-center animate-fade-in">
+                        <span class="inline-block px-4 py-1.5 mb-8 text-[10px] font-black tracking-[0.3em] text-indigo-600 bg-indigo-50 rounded-full uppercase">Portfolio V4 / Pure Vanilla JS</span>
+                        <h1 class="text-7xl md:text-9xl font-black tracking-tighter mb-10 leading-[0.9]">Anna Keita.</h1>
+                        <p class="text-xl md:text-2xl text-slate-400 font-medium leading-relaxed max-w-2xl mx-auto mb-12">
+                            Conception et développement d'applications web d'excellence. Expertise Fullstack & Design.
+                        </p>
+                        <div class="flex flex-col md:flex-row items-center justify-center gap-6">
+                            <button onclick="navigate('projects')" class="px-8 py-4 bg-indigo-600 text-white font-black text-xs uppercase tracking-widest rounded-full hover:bg-slate-900 transition-all transform hover:scale-105 shadow-lg shadow-indigo-100">
+                                Explorer le catalogue
+                            </button>
+                        </div>
+                    </div>
+                </section>
+                <section id="about" class="py-32 px-6 bg-slate-50 border-t border-slate-100">
+                    <div class="max-w-4xl mx-auto">
+                        <h2 class="text-4xl font-black tracking-tighter mb-12">Philosophie.</h2>
+                        <div class="grid md:grid-cols-2 gap-16">
+                            <p class="text-xl text-slate-600 leading-relaxed font-medium">
+                                Je crois en un web où la performance technique et l'élégance visuelle ne sont jamais compromises.
+                            </p>
+                            <p class="text-xl text-slate-400 leading-relaxed font-medium">
+                                L'utilisation du JavaScript pur me permet de garantir des temps de chargement records.
+                            </p>
+                        </div>
                     </div>
                 </section>
             `;
         }
 
         function renderProjectList() {
-            document.getElementById('app').innerHTML = `
-                <div class="max-w-7xl mx-auto px-6 py-20">
-                    <h1 class="text-5xl font-black mb-12">Projets.</h1>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                        ${projects.map(p => `
-                            <div class="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm cursor-pointer" onclick="navigate('detail', '${p.id}')">
-                                <h3 class="text-2xl font-black mb-2">${p.title}</h3>
-                                <p class="text-slate-400">${p.shortDesc}</p>
-                            </div>
-                        `).join('')}
+            const app = document.getElementById('app');
+            app.innerHTML = `
+                <div class="max-w-7xl mx-auto px-6 py-20 animate-fade-in">
+                    <div class="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
+                        <div>
+                            <h1 class="text-7xl md:text-8xl font-black tracking-tighter mb-4">Projets.</h1>
+                        </div>
+                        <div class="w-full md:w-80">
+                            <input type="text" id="projectSearch" placeholder="Chercher un projet..." 
+                                class="w-full px-6 py-4 bg-white border border-slate-200 rounded-3xl focus:outline-none focus:ring-4 focus:ring-indigo-50 transition-all shadow-sm font-medium"
+                                oninput="filterProjects(this.value)">
+                        </div>
+                    </div>
+                    <div id="projectGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                        ${projects.map(p => renderProjectCard(p)).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderProjectCard(p) {
+            return `
+                <div class="group cursor-pointer bg-white p-3 rounded-[3rem] border border-slate-100 shadow-sm hover:shadow-2xl transition-all duration-700"
+                     onclick="navigate('detail', '${p.id}')">
+                    <div class="aspect-[4/5] bg-slate-50 rounded-[2.5rem] mb-8 overflow-hidden relative">
+                        <img src="${p.image}" class="w-full h-full object-cover transition duration-1000 group-hover:scale-110 opacity-90 group-hover:opacity-100" />
+                        <div class="absolute top-8 left-8">
+                             <span class="px-4 py-2 bg-white/95 backdrop-blur text-[10px] font-black uppercase tracking-[0.2em] rounded-full shadow-lg">
+                                ${p.category}
+                             </span>
+                        </div>
+                    </div>
+                    <div class="px-8 pb-8">
+                        <h3 class="text-3xl font-black tracking-tighter mb-4 group-hover:text-indigo-600 transition-colors">${p.title}</h3>
+                        <p class="text-slate-400 text-sm font-medium leading-relaxed line-clamp-2">${p.shortDesc}</p>
                     </div>
                 </div>
             `;
@@ -65,13 +161,45 @@
 
         function renderProjectDetail(id) {
             const p = projects.find(item => item.id === id);
-            document.getElementById('app').innerHTML = `
-                <div class="max-w-4xl mx-auto px-6 py-20">
-                    <button onclick="navigate('projects')" class="mb-10 text-slate-400">&larr; Retour</button>
-                    <h1 class="text-5xl font-black mb-8">${p.title}</h1>
-                    <p class="text-xl text-slate-500">${p.fullDesc}</p>
+            if (!p) return navigate('projects');
+
+            const app = document.getElementById('app');
+            app.innerHTML = `
+                <div class="max-w-5xl mx-auto px-6 py-20 animate-fade-in">
+                    <button onclick="navigate('projects')" class="mb-16 text-slate-400 hover:text-indigo-600 transition">
+                        &larr; Retour au catalogue
+                    </button>
+                    
+                    <span class="inline-block px-4 py-2 mb-6 text-[10px] font-black tracking-[0.3em] text-indigo-600 bg-indigo-50 rounded-full uppercase">${p.category}</span>
+                    <h1 class="text-7xl font-black tracking-tighter mb-12 leading-none">${p.title}</h1>
+                    
+                    <div class="aspect-video bg-slate-100 rounded-[3rem] mb-20 overflow-hidden shadow-2xl">
+                        <img src="${p.image}" class="w-full h-full object-cover" />
+                    </div>
+                    
+                    <div class="grid md:grid-cols-3 gap-20">
+                        <div class="md:col-span-2">
+                             <h2 class="text-3xl font-black mb-8">Concept.</h2>
+                             <p class="text-xl text-slate-500 leading-relaxed font-medium">${p.fullDesc}</p>
+                        </div>
+                        <div>
+                             <h2 class="text-3xl font-black mb-8">Stack.</h2>
+                             <div class="flex flex-wrap gap-3">
+                                ${p.tech.map(t => `<span class="px-4 py-2 bg-white border border-slate-200 text-[10px] font-black uppercase tracking-widest rounded-xl shadow-sm">${t}</span>`).join('')}
+                             </div>
+                        </div>
+                    </div>
                 </div>
             `;
+        }
+
+        function filterProjects(query) {
+            const grid = document.getElementById('projectGrid');
+            const filtered = projects.filter(p => 
+                p.title.toLowerCase().includes(query.toLowerCase()) || 
+                p.category.toLowerCase().includes(query.toLowerCase())
+            );
+            grid.innerHTML = filtered.map(p => renderProjectCard(p)).join('');
         }
 
         window.onload = () => navigate('home');

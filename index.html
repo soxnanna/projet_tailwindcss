@@ -6,14 +6,13 @@
     <title>Anna Keita | Portfolio</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-slate-50 text-slate-900 antialiased selection:bg-indigo-100 flex flex-col min-h-screen">
-    <nav class="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-xl border-b border-slate-100">
+<body class="bg-slate-50 text-slate-900 flex flex-col min-h-screen">
+    <nav class="fixed top-0 w-full z-50 bg-white border-b border-slate-100">
         <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-            <span class="text-2xl font-black tracking-tighter text-indigo-600">AK.</span>
-            <div class="hidden md:flex space-x-10 text-xs font-bold uppercase tracking-widest text-slate-500">
-                <a href="#home">Accueil</a>
-                <a href="#projects">Projets</a>
-                <a href="#contact">Contact</a>
+            <span class="text-2xl font-black text-indigo-600 cursor-pointer" onclick="navigate('home')">AK.</span>
+            <div class="hidden md:flex space-x-10 text-xs font-bold uppercase text-slate-500">
+                <a href="javascript:void(0)" onclick="navigate('home')">Accueil</a>
+                <a href="javascript:void(0)" onclick="navigate('projects')">Projets</a>
             </div>
         </div>
     </nav>
@@ -24,7 +23,15 @@
         <p class="text-[10px] font-black tracking-[0.3em] text-slate-300 uppercase">&copy; 2026 Anna Keita</p>
     </footer>
     <script>
-        function navigate(view) { console.log('Navigating to', view); }
+        const projects = [
+            { id: 'lamp-fall', title: 'Encyclopédie Lamp Fall', category: 'Web' },
+            { id: 'l-absolu', title: 'L\'Absolu Portfolio', category: 'Design' },
+            { id: 'dieye-apple', title: 'Dieye Apple Branding', category: 'Branding' }
+        ];
+
+        function navigate(view) {
+            console.log('Navigue vers', view);
+        }
         window.onload = () => navigate('home');
     </script>
 </body>

@@ -24,14 +24,15 @@
     </footer>
     <script>
         const projects = [
-            { id: 'lamp-fall', title: 'Encyclopédie Lamp Fall', category: 'Web', shortDesc: 'Archive spirituelle.' },
-            { id: 'l-absolu', title: 'L\'Absolu Portfolio', category: 'Design', shortDesc: 'Design premium.' },
-            { id: 'dieye-apple', title: 'Dieye Apple Branding', category: 'Branding', shortDesc: 'Identité visuelle.' }
+            { id: 'lamp-fall', title: 'Encyclopédie Lamp Fall', category: 'Web', shortDesc: 'Archive spirituelle.', fullDesc: 'Une plateforme de recherche complète.' },
+            { id: 'l-absolu', title: 'L\'Absolu Portfolio', category: 'Design', shortDesc: 'Design premium.', fullDesc: 'Un portfolio avec glassmorphism.' },
+            { id: 'dieye-apple', title: 'Dieye Apple Branding', category: 'Branding', shortDesc: 'Identité visuelle.', fullDesc: 'Branding pour boutique mobile.' }
         ];
 
-        function navigate(view) {
+        function navigate(view, id = null) {
             if (view === 'home') renderHome();
             else if (view === 'projects') renderProjectList();
+            else if (view === 'detail') renderProjectDetail(id);
         }
 
         function renderHome() {
@@ -52,12 +53,23 @@
                     <h1 class="text-5xl font-black mb-12">Projets.</h1>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                         ${projects.map(p => `
-                            <div class="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm" onclick="navigate('detail', '${p.id}')">
+                            <div class="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm cursor-pointer" onclick="navigate('detail', '${p.id}')">
                                 <h3 class="text-2xl font-black mb-2">${p.title}</h3>
                                 <p class="text-slate-400">${p.shortDesc}</p>
                             </div>
                         `).join('')}
                     </div>
+                </div>
+            `;
+        }
+
+        function renderProjectDetail(id) {
+            const p = projects.find(item => item.id === id);
+            document.getElementById('app').innerHTML = `
+                <div class="max-w-4xl mx-auto px-6 py-20">
+                    <button onclick="navigate('projects')" class="mb-10 text-slate-400">&larr; Retour</button>
+                    <h1 class="text-5xl font-black mb-8">${p.title}</h1>
+                    <p class="text-xl text-slate-500">${p.fullDesc}</p>
                 </div>
             `;
         }

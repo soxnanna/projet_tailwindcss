@@ -24,14 +24,44 @@
     </footer>
     <script>
         const projects = [
-            { id: 'lamp-fall', title: 'Encyclopédie Lamp Fall', category: 'Web' },
-            { id: 'l-absolu', title: 'L\'Absolu Portfolio', category: 'Design' },
-            { id: 'dieye-apple', title: 'Dieye Apple Branding', category: 'Branding' }
+            { id: 'lamp-fall', title: 'Encyclopédie Lamp Fall', category: 'Web', shortDesc: 'Archive spirituelle.' },
+            { id: 'l-absolu', title: 'L\'Absolu Portfolio', category: 'Design', shortDesc: 'Design premium.' },
+            { id: 'dieye-apple', title: 'Dieye Apple Branding', category: 'Branding', shortDesc: 'Identité visuelle.' }
         ];
 
         function navigate(view) {
-            console.log('Navigue vers', view);
+            if (view === 'home') renderHome();
+            else if (view === 'projects') renderProjectList();
         }
+
+        function renderHome() {
+            document.getElementById('app').innerHTML = `
+                <section class="min-h-[80vh] flex items-center justify-center text-center px-6">
+                    <div>
+                        <h1 class="text-7xl font-black mb-8">Anna Keita.</h1>
+                        <p class="text-xl text-slate-400 mb-10">Développeuse Web & Designer.</p>
+                        <button onclick="navigate('projects')" class="px-8 py-4 bg-indigo-600 text-white font-bold rounded-full">Mes Projets</button>
+                    </div>
+                </section>
+            `;
+        }
+
+        function renderProjectList() {
+            document.getElementById('app').innerHTML = `
+                <div class="max-w-7xl mx-auto px-6 py-20">
+                    <h1 class="text-5xl font-black mb-12">Projets.</h1>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        ${projects.map(p => `
+                            <div class="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm" onclick="navigate('detail', '${p.id}')">
+                                <h3 class="text-2xl font-black mb-2">${p.title}</h3>
+                                <p class="text-slate-400">${p.shortDesc}</p>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
         window.onload = () => navigate('home');
     </script>
 </body>
